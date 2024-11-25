@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RenderOBJ.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\STB\stb.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Objects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Coord.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Skybox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModelLoader\Loader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Light.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Engine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RenderOBJ.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\STB\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Objects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Coord.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModelLoader\Loader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Shaders\Skybox\Shader1\Vertex.glsl" />
+    <Text Include="Shaders\Skybox\Shader1\Fragment.glsl" />
+    <Text Include="Shaders\2D\ShaderV3\Vertex.glsl" />
+    <Text Include="Shaders\2D\ShaderV3\Fragment.glsl" />
+    <Text Include="Shaders\2D\ShaderV2\Vertex.glsl" />
+    <Text Include="Shaders\2D\ShaderV2\Fragment.glsl" />
+    <Text Include="Shaders\2D\ShaderV1\Vertex.glsl" />
+    <Text Include="Shaders\2D\ShaderV1\Fragment.glsl" />
+    <Text Include="Shaders\3D\ShaderV1\Fragment.glsl" />
+    <Text Include="Shaders\3D\ShaderV1\Vertex.glsl" />
+    <Text Include="Shaders\3D\ShaderV2\Fragment.glsl" />
+    <Text Include="Shaders\3D\ShaderV2\Vertex.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Textures\skybox1\back.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\skybox1\bottom.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\skybox1\front.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\skybox1\left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\skybox1\right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\skybox1\skybox.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\skybox1\top.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Default.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Grass.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Test.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Red.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\White.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
