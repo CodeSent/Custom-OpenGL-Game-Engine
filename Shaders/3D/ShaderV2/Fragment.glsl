@@ -140,7 +140,7 @@ void main()
         case enum_SPOT_LIGHT:
             color += getSpotLight(color,selLight);
         default:
-            color += getPointLight(color,selLight);
+            break;
         }
         
     }

@@ -8,7 +8,7 @@
 
 
 
-float Rotation = 10.0f;
+float Rotation = 15.0f;
 
 
 
@@ -42,11 +42,11 @@ class TestGame : public Engine {
 		Red =  gameLighting::createLightSource({ 7.5f,5.0f, 0.0f }, { 1.0f,0.0f,0.0f }, SPOT);
 		Green = gameLighting::createLightSource({-7.5f,5.0f, 0.0f }, { 0.0f,1.0f,0.0f }, SPOT);
 		Blue = gameLighting::createLightSource({ 0.0f,5.0f, 7.5f }, { 0.0f,0.0f,1.0f }, SPOT);
-		White = gameLighting::createLightSource({ 0.0f,5.0f,-17.5f}, { 1.0f,1.0f,1.0f }, SPOT);
+		White = gameLighting::createLightSource({ 0.0f,5.0f,-7.5f}, { 1.0f,1.0f,1.0f }, SPOT);
 
 		alpha = 0.0f;
 
-		//gameLighting::SunDir = { 0.0f,-1.0f,1.0f };
+		gameLighting::SunDir = { 0.0f,-0.0f,1.0f };
 		
 
 		Sword.Load("Models/Sword.obj");

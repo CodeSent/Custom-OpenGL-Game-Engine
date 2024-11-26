@@ -22,7 +22,7 @@ struct lightObject {
 	glm::vec3 Dir = {0.0f,-1.0f,0.0f};
 	glm::vec3 Color = { 1.0f,1.0f,1.0f }, Pos = { 7.5f,15.0f,10.0f };
 	float Am = 0.1f, Diff = 0.8f, Spec = 1.0f;
-	float Quadratic = 0.0f, Linear = 0.0f, Constant = 1.0f;
+	float Quadratic = 0.0f, Linear = 0.0f, Constant = 0.5f;
 	bool Enabled = true;
 };
 
