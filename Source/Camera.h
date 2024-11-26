@@ -16,12 +16,13 @@ using Vector3 = glm::vec3;
 
 class Camera
 {
-	Vector3 Position = Vector3(0.0f,10.0f,5.0f);
-	Vector3 Orientation = Vector3(0.0f,0.0f,-1.0f);
-	Vector3 Up = Vector3(0.0f, 1.0f, 0.0f);
 
 	bool FirstClick = true;
 public:
+	Vector3 Position = Vector3(0.0f,10.0f,5.0f);
+	Vector3 Up = Vector3(0.0f, 1.0f, 0.0f);
+	Vector3 Orientation = Vector3(0.0f,0.0f,-1.0f);
+
 	int Width, Height;
 
 	float Speed =  0.05f;

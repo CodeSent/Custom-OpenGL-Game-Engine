@@ -222,6 +222,15 @@ void Shader::setUniform(const char* Name, float Value)
 	}
 }
 
+void Shader::setUnifrom(const char* Name, bool Value)
+{
+	int Pos = getUniformLocation(Name);
+	if (Pos >= 0) {
+		Bind(true);
+		glUniform1ui(Pos, Value);
+	}
+}
+
 void Shader::setUniform(const char* Name, glm::vec3 Value)
 {
 	int Pos = getUniformLocation(Name);

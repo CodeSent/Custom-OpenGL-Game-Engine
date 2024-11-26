@@ -12,6 +12,7 @@ struct LightModel {
     vec3 lColor;
     vec3 Pos;
     vec3 Dir;
+    bool Enabled;
     float Am , Diff , Spec;
     float Quadratic, Linear, Constant;
     //float Quadratic, Linear, Constant;
@@ -133,6 +134,7 @@ void main()
 
     for (uint i = 0; i < total_Lights ; i++) {
         LightModel selLight = Lights[i];
+        if (!selLight.Enabled) continue;
         switch(selLight.Type) {
 
         case enum_POINT_LIGHT:

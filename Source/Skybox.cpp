@@ -2,6 +2,7 @@
 #include "STB/stb_image.h"
 #include <gtc/type_ptr.hpp>
 #include "Skybox.h"
+#include "Light.h"
 #include <iostream>
 
 
@@ -131,7 +132,10 @@ void Skybox::render()
 //	if (mLoc == -1) std::cout << "Unfiform not found. \n";
 //	glUniformMatrix4fv(mLoc, 1, GL_FALSE, glm::value_ptr(invVPmat));
 	skyboxShader.setUnifrom("m_invProjView", invVPmat);
+	skyboxShader.setUniform("SunDir", gameLighting::SunDir);
 	glActiveTexture(GL_TEXTURE0);
+
+
 	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 	Bind(false);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);

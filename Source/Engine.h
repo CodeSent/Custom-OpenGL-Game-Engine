@@ -51,21 +51,21 @@ enum keyCode {
 
 };
 
-enum InputType {
-	BEGIN,
-	END
+enum InputStatus {
+	BEGIN = GLFW_PRESS,
+	END = GLFW_RELEASE
 };
 
 class Engine
 {
 	GLFWwindow* Screen;
 
-	Camera CurrentCam;
-	Skybox Sky;
+	
+	std::unordered_map<size_t, size_t> keyStatus;
 	virtual bool Start();
 	virtual bool Update(float deltaTime);
 	virtual void End();
-	virtual void keyboardInput(keyCode Key);
+	virtual void keyboardInput(keyCode Key, InputStatus Status);
 	void PollEvents();
 
 	
@@ -74,6 +74,9 @@ class Engine
 	void Terminate();
 
 	float LastTime = 0;
+protected:
+	Camera CurrentCam;
+	Skybox Sky;
 
 public:
 	void Build(int width, int height, const char* Title);

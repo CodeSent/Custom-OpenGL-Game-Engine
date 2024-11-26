@@ -117,16 +117,19 @@ void Engine::End()
 {
 }
 
-void Engine::keyboardInput(keyCode Key)
+void Engine::keyboardInput(keyCode Key, InputStatus Status)
 {
 
 }
 
 void Engine::PollEvents()
 {
-	for (int i = GLFW_KEY_SPACE; i < 349; i++) {
-		if (glfwGetKey(Screen, i) == GLFW_PRESS) {
-			keyboardInput(keyCode(i));
+	for (size_t i = GLFW_KEY_SPACE; i < 349; i++) {
+		if (keyStatus[i] == 0) keyStatus[i] = GLFW_RELEASE;
+		size_t currentkeyStatus = glfwGetKey(Screen, i);
+		if (currentkeyStatus != keyStatus[i]) {
+			keyboardInput(keyCode(i), InputStatus(currentkeyStatus));
+			keyStatus[i] = currentkeyStatus;
 		}
 	}
 	

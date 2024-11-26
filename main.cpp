@@ -17,12 +17,13 @@ class TestGame : public Engine {
 	Plane GrassTerrain;
 	staticMesh MeshTest;
 	staticMesh Cube;
+	staticMesh Axe;
 	staticMesh Sword;
-	float alpha;
+	float alpha = 0.0f;
+	float cosAlpha = 0.0f;
 	lightObject* Red;
-	lightObject* Green;
-	lightObject* Blue;
-	lightObject* White;
+
+	lightObject *FlashLight;
 
 	bool Start()
 	{
@@ -36,17 +37,26 @@ class TestGame : public Engine {
 		Cube.Transformation.size= { 2,2,2 };
 		Cube.Transformation.position.y += 2.5;
 
+		Axe.Load("Models/cube.obj");
+		Axe.Tex.Load("Textures/crate.png");
+		Axe.Transformation.size = { 2,2,2 };
+		Axe.Transformation.position.y += 2.5;
+
+		vec3 v1 = { 0.0f,1.0f,0.0f }, v2 = { 0.0f,0.0f,0.0f };
+		
 
 
+		Red =  gameLighting::createLightSource({ 0.5f,10.0f, 0.0f }, { 1.0f,1.0f,1.0f }, SPOT);
+		FlashLight = gameLighting::createLightSource({ 0.0f,0.0f, 0.0f }, { 1.0f,1.0f,1.0f }, SPOT);
 
-		Red =  gameLighting::createLightSource({ 7.5f,5.0f, 0.0f }, { 1.0f,0.0f,0.0f }, SPOT);
-		Green = gameLighting::createLightSource({-7.5f,5.0f, 0.0f }, { 0.0f,1.0f,0.0f }, SPOT);
-		Blue = gameLighting::createLightSource({ 0.0f,5.0f, 7.5f }, { 0.0f,0.0f,1.0f }, SPOT);
-		White = gameLighting::createLightSource({ 0.0f,5.0f,-7.5f}, { 1.0f,1.0f,1.0f }, SPOT);
+		FlashLight->Enabled = false;
+		FlashLight->Linear = 0.0001;
+
+
 
 		alpha = 0.0f;
 
-		gameLighting::SunDir = { 0.0f,-0.0f,1.0f };
+		gameLighting::SunDir = { 0.0f,0.0f,0.0f };
 		
 
 		Sword.Load("Models/Sword.obj");
@@ -72,27 +82,33 @@ class TestGame : public Engine {
 		Cube.Transformation.rotation.y += deltaTime * Rotation;
 
 
-		Red->Dir = { std::cos(alpha),-1.0f,std::sin(alpha)};
-		Blue->Dir = { std::cos(-alpha),-1.0f,std::sin(-alpha) };
-		Green->Dir = { std::cos(alpha),-1.0f,std::sin(alpha) };
-		White->Dir = { std::cos(-alpha),-1.0f,std::sin(-alpha) };
 
-		alpha += deltaTime;
+		alpha += deltaTime*0.5;
+
+
+		//gameLighting::SunDir = { 0.0f,(1 + std::sin( alpha)) / 2,std::cos(alpha) };
+
+		FlashLight->Pos = CurrentCam.Position;
+		FlashLight->Dir = CurrentCam.Orientation;
 
 		Cube.Draw();
-		//Sword.Draw();
+
 
 
 
 		return true;
 	}
 
-	void keyboardInput(keyCode Key)
+	void keyboardInput(keyCode Key,InputStatus Status)
 	{
 		switch (Key)
 		{
-		case E:
-			
+		case F:
+		{
+			if (Status == BEGIN) {
+				FlashLight->Enabled = !(FlashLight->Enabled);
+			}
+		};
 		default:
 			break;
 		}

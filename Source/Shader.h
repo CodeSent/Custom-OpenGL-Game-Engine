@@ -31,8 +31,10 @@ public:
 	void setUniform(const char* Name, int Value);
 	void setUniform(const char* Name, unsigned int Value);
 	void setUniform(const char* Name, float Value);
+	void setUnifrom(const char* Name, bool Value);
 	void setUniform(const char* Name, glm::vec3 Value);
 	void setUnifrom(const char* Name, glm::mat4x4 Value);
+
 
 
 };
