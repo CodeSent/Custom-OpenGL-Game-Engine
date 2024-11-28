@@ -9,5 +9,6 @@ public:
 	void disable();
 	Texture colorMap;
 	Texture NormalMap;
+	Texture SpecularMap;
 };
 

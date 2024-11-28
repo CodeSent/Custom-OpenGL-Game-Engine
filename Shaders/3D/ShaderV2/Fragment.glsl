@@ -26,8 +26,12 @@ struct SunModel {
 
 struct Material {
     sampler2D ColorMap;
+
     bool UseNormalMap;
     sampler2D NormalMap;
+
+    bool UseSpecularMap;
+    sampler2D SpecularMap;
 };
 
 in vec2 f_UV;
@@ -62,6 +66,14 @@ vec3 getMapNormal() {
         v_NormalCopy = normalize((v_Normalread * 2.0f) -1.0f);
     }
     return v_NormalCopy;
+}
+
+float getSpecularMultiplier() {
+    float Mul = 1.0f;
+    if (objMaterial.UseSpecularMap) {
+        Mul = texture(objMaterial.SpecularMap,f_UV).r;
+    }
+    return Mul;
 }
 
 vec3 getPointLight(vec3 Color,LightModel LightSource) {
@@ -99,7 +111,7 @@ vec3 getPointLight(vec3 Color,LightModel LightSource) {
 
    
 
-    return Color * (ambient + diffuse + specular) * atten;
+    return Color * (ambient + diffuse + (specular*getSpecularMultiplier())) * atten;
 }
 
 vec3 getSunLight(vec3 Color) {
@@ -131,7 +143,7 @@ vec3 getSunLight(vec3 Color) {
     float SpecConst = pow(max(dot(viewDir,reflectDir),0),32);
     vec3 specular = SpecConst * vSpec;
 
-    return Color * (ambient+ diffuse + specular);
+    return Color * (ambient+ diffuse + (specular*getSpecularMultiplier()));
 }
 
 
@@ -180,7 +192,7 @@ vec3 getSpotLight(vec3 Color,LightModel LightSource) {
     float angle = dot(normalize(LightSource.Dir),-lightDir);
     float inten = clamp((angle - outerCone)/(innerCone-outerCone),0.0f,1.0f);
 
-    return Color * (ambient + (diffuse * inten) + (specular * inten)) * atten;
+    return Color * (ambient + (diffuse * inten) + ((specular*getSpecularMultiplier()) * inten)) * atten;
 }
 
 

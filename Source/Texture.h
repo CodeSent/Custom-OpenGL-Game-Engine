@@ -11,7 +11,8 @@ struct TexData {
 
 enum TextureType {
 	COLOR,
-	NORMAL
+	NORMAL,
+	SPECULAR,
 };
 
 class Texture

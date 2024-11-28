@@ -44,7 +44,7 @@ void main() {
 	vec3 N = normalize(vec3(data_in[0].Model * vec4(cross(edge1,edge0),0.0f)));
 
 	mat3 TBN = mat3(T,B,N);
-	mat3 inv_TBN = transpose(TBN);
+	mat3 inv_TBN = TBN;
 
 	gl_Position = data_in[0].projection * gl_in[0].gl_Position;
 	fragNormal = data_in[0].fragNormal;

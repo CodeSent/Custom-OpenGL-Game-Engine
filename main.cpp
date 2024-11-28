@@ -35,6 +35,7 @@ class TestGame : public Engine {
 		Cube.Load("Models/cube.obj");
 		Cube.objMaterial.colorMap.Load("Textures/crate.png",COLOR);
 		Cube.objMaterial.NormalMap.Load("Textures/crate_Normal.png",NORMAL);
+		Cube.objMaterial.SpecularMap.Load("Textures/crate_Specular.png", SPECULAR);
 		Cube.Transformation.size= { 2,2,2 };
 		Cube.Transformation.position.y += 2.5;
 
@@ -58,7 +59,7 @@ class TestGame : public Engine {
 
 		alpha = 0.0f;
 
-		gameLighting::SunDir = { 0.0f,0.0f,0.0f };
+		gameLighting::SunDir = { 0.5f,0.5f,0.5f };
 		
 
 		Sword.Load("Models/Sword.obj");

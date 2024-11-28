@@ -42,6 +42,9 @@ void Texture::LoadTexture(TexData& Target, std::string File, TextureType Type)
 
 	switch (Type)
 	{
+	case SPECULAR:
+		TextureSlot = 1;
+		internalFormat = GL_RED;
 	case NORMAL:
 	    TextureSlot = 2;
 		internalFormat = GL_RGB;
