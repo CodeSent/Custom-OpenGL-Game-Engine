@@ -82,7 +82,7 @@ class TestGame : public Engine {
 	{
 		GrassTerrain.Draw();
 
-		Cube.Transformation.rotation.y += deltaTime * Rotation;
+		//Cube.Transformation.rotation.y += deltaTime * Rotation;
 
 
 

@@ -18,11 +18,14 @@ in Data {
 	mat4 Model;
 } data_in[];
 
+mat3 inv_TBN;
+
 void defVertex(uint Index) {
 	gl_Position = data_in[Index].projection * gl_in[Index].gl_Position;
 	fragNormal = data_in[Index].fragNormal;
 	fragPos = data_in[Index].fragPos;
 	f_UV = data_in[Index].f_UV;
+	fragTBN = inv_TBN;
 	EmitVertex();
 }
 
@@ -44,25 +47,10 @@ void main() {
 	vec3 N = normalize(vec3(data_in[0].Model * vec4(cross(edge1,edge0),0.0f)));
 
 	mat3 TBN = mat3(T,B,N);
-	mat3 inv_TBN = TBN;
+	inv_TBN = TBN;
 
-	gl_Position = data_in[0].projection * gl_in[0].gl_Position;
-	fragNormal = data_in[0].fragNormal;
-	fragPos = data_in[0].fragPos;
-	f_UV = data_in[0].f_UV;
-	fragTBN = inv_TBN;
-	EmitVertex();
-	gl_Position = data_in[1].projection * gl_in[1].gl_Position;
-	fragNormal = data_in[1].fragNormal;
-	fragPos = data_in[1].fragPos;
-	f_UV = data_in[1].f_UV;
-	fragTBN = inv_TBN;
-	EmitVertex();
-	gl_Position = data_in[2].projection * gl_in[2].gl_Position;
-	fragNormal = data_in[2].fragNormal;
-	fragPos = data_in[2].fragPos;
-	f_UV = data_in[2].f_UV;
-	fragTBN = inv_TBN;
-	EmitVertex();
+	defVertex(0);
+	defVertex(1);
+	defVertex(2);
 	EndPrimitive();
 }

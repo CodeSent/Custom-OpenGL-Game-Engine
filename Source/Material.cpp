@@ -27,5 +27,7 @@ void Material::setUniforms(Shader& targetShader)
 void Material::disable()
 {
 	colorMap.Bind(false);
+
 	if (NormalMap.TextureSelected != nullptr) NormalMap.Bind(false);
+	if (SpecularMap.TextureSelected != nullptr) SpecularMap.Bind(false);
 }
