@@ -108,6 +108,7 @@ void gameLighting::setUnifroms(Shader& objShader)
 		lightObject& light = I.second;
 		
 		if (index >= size_t(256)) break;
+		if (!light.Enabled) continue;
 
 		
 		std::string StringIndex = std::to_string(index);
@@ -153,11 +154,8 @@ void gameLighting::setUnifroms(Shader& objShader)
 		std::string lType = currentIndex + ".Type";
 		objShader.setUniform(lType.c_str(), size_t(light.Type));
 
-		std::string lEnabled = currentIndex + ".Enabled";
-		objShader.setUniform(lEnabled.c_str(), size_t(light.Enabled));
-
 		index++;
 	}
 
-	objShader.setUniform("total_Lights", maxLights);
+	objShader.setUniform("total_Lights", index);
 }

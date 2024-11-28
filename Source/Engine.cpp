@@ -81,6 +81,7 @@ void Engine::gameLoop()
 
 		Running = Update(DeltaTime);
 
+		upTime += DeltaTime;
 
 		glfwSwapBuffers(Screen);
 		glfwPollEvents();

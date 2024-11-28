@@ -12,7 +12,6 @@ struct LightModel {
     vec3 lColor;
     vec3 Pos;
     vec3 Dir;
-    bool Enabled;
     float Am , Diff , Spec;
     float Quadratic, Linear, Constant;
     //float Quadratic, Linear, Constant;
@@ -25,12 +24,19 @@ struct SunModel {
     
 };
 
+struct Material {
+    sampler2D ColorMap;
+    bool UseNormalMap;
+    sampler2D NormalMap;
+};
+
 in vec2 f_UV;
 in vec3 fragNormal;
 in vec3 fragPos;
+in mat3 fragTBN;
 
-uniform sampler2D Tex0;
-//uniform LightModel Light;
+uniform Material objMaterial;
+
 uniform SunModel Sun;
 
 uniform uint total_Lights;
@@ -43,10 +49,36 @@ vec3 Lerp(vec3 v1, vec3 v2, float a) {
   return v1 + (v2-v1) * a;
 }
 
+vec3 v_Normal = normalize(fragNormal);
+
+
+
+//objMaterial.NormalMap
+vec3 v_Normalread = texture(objMaterial.NormalMap,f_UV).rgb;
+
+vec3 getMapNormal() {
+    vec3 v_NormalCopy = v_Normal;
+    if (objMaterial.UseNormalMap) {
+        v_NormalCopy = normalize((v_Normalread * 2.0f) -1.0f);
+    }
+    return v_NormalCopy;
+}
+
 vec3 getPointLight(vec3 Color,LightModel LightSource) {
     
+    vec3 c_lPos = LightSource.Pos;
+    vec3 c_fragsPos = fragPos;
+    vec3 c_camPos = camPos;
 
-    vec3 v_Normal = normalize(fragNormal);
+    if (objMaterial.UseNormalMap) {
+       c_lPos *= fragTBN;
+       c_fragsPos *= fragTBN;
+       c_camPos *= fragTBN;
+    }
+    
+    vec3 lightDir = normalize(c_lPos - c_fragsPos);
+    vec3 v_NormalCopy = getMapNormal();
+    vec3 viewDir = normalize(c_camPos - c_fragsPos);
 
     vec3 vAm =   LightSource.lColor * LightSource.Am;
     vec3 vDiff = LightSource.lColor * LightSource.Diff;
@@ -54,12 +86,11 @@ vec3 getPointLight(vec3 Color,LightModel LightSource) {
 
     vec3 ambient = vAm;
 
-    vec3 lightDir = normalize(LightSource.Pos - fragPos);
-    float diff = max(0, dot(lightDir,v_Normal));
+
+    float diff = max(0, dot(lightDir,v_NormalCopy));
     vec3 diffuse = diff * vDiff;
 
-    vec3 viewDir = normalize(camPos - fragPos);
-    vec3 reflectDir = reflect(-lightDir,v_Normal);
+    vec3 reflectDir = reflect(-lightDir,v_NormalCopy);
     float SpecConst = pow(max(dot(viewDir,reflectDir),0),32);
     vec3 specular = SpecConst * vSpec;
 
@@ -72,7 +103,20 @@ vec3 getPointLight(vec3 Color,LightModel LightSource) {
 }
 
 vec3 getSunLight(vec3 Color) {
-    vec3 v_Normal = normalize(fragNormal);
+
+    vec3 c_lPos = Sun.Dir + fragPos;
+    vec3 c_fragsPos = fragPos;
+    vec3 c_camPos = camPos;
+    
+    if (objMaterial.UseNormalMap) {
+        c_lPos *= fragTBN;
+        c_fragsPos *= fragTBN;
+        c_camPos *= fragTBN;
+    }
+
+    vec3 lightDir = normalize(c_lPos - c_fragsPos);
+    vec3 v_NormalCopy = getMapNormal();
+    vec3 viewDir = normalize(c_camPos - c_fragsPos);
 
     vec3 vAm = Sun.lColor * Sun.Am;
     vec3 vDiff = Sun.lColor * Sun.Diff;
@@ -80,23 +124,42 @@ vec3 getSunLight(vec3 Color) {
 
     vec3 ambient = vAm;
 
-    vec3 lightDir = normalize(Sun.Dir);
-    float diff = max(0, dot(lightDir,v_Normal));
+    float diff = max(0, dot(lightDir,v_NormalCopy));
     vec3 diffuse = diff * vDiff;
 
-    vec3 viewDir = normalize(camPos - fragPos);
-    vec3 reflectDir = reflect(-lightDir,v_Normal);
+    vec3 reflectDir = reflect(-lightDir,v_NormalCopy);
     float SpecConst = pow(max(dot(viewDir,reflectDir),0),32);
     vec3 specular = SpecConst * vSpec;
 
     return Color * (ambient+ diffuse + specular);
 }
 
+
+
+
+
+
+
 vec3 getSpotLight(vec3 Color,LightModel LightSource) {
     float outerCone = 0.90f;
     float innerCone = 0.95f;
 
-    vec3 v_Normal = normalize(fragNormal);
+    vec3 c_lPos = LightSource.Pos;
+    vec3 c_fragsPos = fragPos;
+    vec3 c_camPos = camPos;
+    
+
+    if (objMaterial.UseNormalMap) {
+       c_lPos *= fragTBN;
+       c_fragsPos *= fragTBN;
+       c_camPos *= fragTBN;
+    }
+
+    vec3 lightDir = normalize(c_lPos - c_fragsPos);
+    vec3 v_NormalCopy = getMapNormal();
+    vec3 viewDir = normalize(c_camPos - c_fragsPos);
+
+
 
     vec3 vAm =   LightSource.lColor * LightSource.Am;
     vec3 vDiff = LightSource.lColor * LightSource.Diff;
@@ -104,12 +167,10 @@ vec3 getSpotLight(vec3 Color,LightModel LightSource) {
 
     vec3 ambient = vAm;
 
-    vec3 lightDir = normalize(LightSource.Pos - fragPos);
-    float diff = max(0, dot(lightDir,v_Normal));
+    float diff = max(0, dot(lightDir,v_NormalCopy));
     vec3 diffuse = diff * vDiff;
 
-    vec3 viewDir = normalize(camPos - fragPos);
-    vec3 reflectDir = reflect(-lightDir,v_Normal);
+    vec3 reflectDir = reflect(-lightDir,v_NormalCopy);
     float SpecConst = pow(max(dot(viewDir,reflectDir),0),32);
     vec3 specular = SpecConst * vSpec;
 
@@ -126,7 +187,8 @@ vec3 getSpotLight(vec3 Color,LightModel LightSource) {
 void main()
 {
     float Gamma = 2.2f;
-    vec3 texColor = texture(Tex0,f_UV).rgb;
+    vec3 texColor = texture(objMaterial.ColorMap,f_UV).rgb;
+    //texColor *= uint(objMaterial.UseNormalMap);
 
     texColor = pow(texColor,vec3(Gamma));
     vec3 color = getSunLight(texColor);
@@ -134,7 +196,6 @@ void main()
 
     for (uint i = 0; i < total_Lights ; i++) {
         LightModel selLight = Lights[i];
-        if (!selLight.Enabled) continue;
         switch(selLight.Type) {
 
         case enum_POINT_LIGHT:

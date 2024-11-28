@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Types.h"
 #include "Light.h"
+#include "Material.h"
 
 #include <vector>
 #include <string>
@@ -20,7 +21,9 @@ protected:
 	RenderOBJ Main;
 	Shader  objShader;
 	virtual void setUniforms();
+	virtual void postRender();
 	bool Created = false;
+	bool Geometry = false;
 public:
 	Texture Tex;
 	std::string ShaderFile = "Shaders/2D/ShaderV3";
@@ -87,7 +90,9 @@ protected:
 	static RenderOBJ Main;
 	static bool Created;
 	void setUniforms();
+	void postRender();
 public:
-	static Light Sun;
+	Material objMaterial;
+
 	Plane();
 };

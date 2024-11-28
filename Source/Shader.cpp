@@ -33,11 +33,13 @@ Assert(Gl_ChckErr(#X, __LINE__));
 std::unordered_map<std::string, ShaderInfo> Shader::Storage;
 std::vector<std::string> Shader::Errors;
 
-void Shader::Build(std::string ShaderDirct)
+void Shader::Build(std::string ShaderDirct, bool Geometry)
 {
 	ShaderInfo& ShaderFound = Storage[ShaderDirct];
 	if (!ShaderFound.Created) {
-		CreateShader(ShaderFound,ShaderDirct);
+		if (Geometry) CreateShaderWithGeometry(ShaderFound, ShaderDirct);
+		else CreateShader(ShaderFound, ShaderDirct);
+		
 	}
 	ShaderSelected = &ShaderFound;
 }
@@ -80,6 +82,7 @@ void Shader::ComplieShader(unsigned int& Target, std::string Src, unsigned int T
 {
 	std::string TypeFile = "Vertex.glsl";
 	if (Type == GL_FRAGMENT_SHADER) TypeFile = "Fragment.glsl";
+	if (Type == GL_GEOMETRY_SHADER) TypeFile = "Geometry.glsl";
 
 	std::string Source = ReadFile(Src + "/" + TypeFile);
 	const char* cSource = Source.c_str();
@@ -111,6 +114,34 @@ void Shader::CreateShader(ShaderInfo& Target, std::string Dirctory)
 
 	glDeleteShader(vS);
 	glDeleteShader(fS);
+
+
+	Target.Created = true;
+
+
+}
+
+void Shader::CreateShaderWithGeometry(ShaderInfo& Target, std::string Dirctory)
+{
+	Target.ID = glCreateProgram();
+
+	Errors.clear();
+
+	unsigned int vS, fS, gS;
+	ComplieShader(vS, Dirctory, GL_VERTEX_SHADER);
+	ComplieShader(fS, Dirctory, GL_FRAGMENT_SHADER);
+	ComplieShader(gS, Dirctory, GL_GEOMETRY_SHADER);
+	DisplayErrors();
+
+	glAttachShader(Target.ID, vS);
+	glAttachShader(Target.ID, fS);
+	glAttachShader(Target.ID, gS);
+	glLinkProgram(Target.ID);
+	glValidateProgram(Target.ID);
+
+	glDeleteShader(vS);
+	glDeleteShader(fS);
+	glDeleteShader(gS);
 
 
 	Target.Created = true;

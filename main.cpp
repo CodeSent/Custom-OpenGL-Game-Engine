@@ -22,32 +22,34 @@ class TestGame : public Engine {
 	float alpha = 0.0f;
 	float cosAlpha = 0.0f;
 	lightObject* Red;
-
+	lightObject* Green;
 	lightObject *FlashLight;
 
 	bool Start()
 	{
 
 		GrassTerrain.Transformation.size = { 1000,1000,1000 };
-		GrassTerrain.Tex.Load("Textures/Grass.png");
+		GrassTerrain.objMaterial.colorMap.Load("Textures/Grass.png");
 		GrassTerrain.Process();
 
 		Cube.Load("Models/cube.obj");
-		Cube.Tex.Load("Textures/crate.png");
+		Cube.objMaterial.colorMap.Load("Textures/crate.png",COLOR);
+		Cube.objMaterial.NormalMap.Load("Textures/crate_Normal.png",NORMAL);
 		Cube.Transformation.size= { 2,2,2 };
 		Cube.Transformation.position.y += 2.5;
 
-		Axe.Load("Models/cube.obj");
-		Axe.Tex.Load("Textures/crate.png");
-		Axe.Transformation.size = { 2,2,2 };
-		Axe.Transformation.position.y += 2.5;
+		Axe.Load("Models/stall.obj");
+		Axe.objMaterial.colorMap.Load("Textures/stall_UV.png");
+		Axe.objMaterial.NormalMap.Load("Textures/stall_UV_Normal.png",NORMAL);
+		Axe.Transformation.size = { 7,7,7 };
+		Axe.Transformation.position = {15.0f,0.0f,0.0f};
 
-		vec3 v1 = { 0.0f,1.0f,0.0f }, v2 = { 0.0f,0.0f,0.0f };
 		
 
 
-		Red =  gameLighting::createLightSource({ 0.5f,10.0f, 0.0f }, { 1.0f,1.0f,1.0f }, SPOT);
+		Red =  gameLighting::createLightSource({ 10.0f,10.0f, 0.0f }, { 1.0f,1.0f,1.0f }, POINT);
 		FlashLight = gameLighting::createLightSource({ 0.0f,0.0f, 0.0f }, { 1.0f,1.0f,1.0f }, SPOT);
+		//Green = gameLighting::createLightSource({ 15.0f,7.5f,0.0f }, { 1.0f,0.0f,0.0f });
 
 		FlashLight->Enabled = false;
 		FlashLight->Linear = 0.0001;
@@ -60,7 +62,7 @@ class TestGame : public Engine {
 		
 
 		Sword.Load("Models/Sword.obj");
-		Sword.Tex.Load("Textures/Sword_Diffuse.png");
+		Sword.objMaterial.colorMap.Load("Textures/Sword_Diffuse.png");
 		Sword.Transformation.size = { 4.0f,4.0f,4.0f };
 		Sword.Transformation.position = { 2.5f,2.5f,5.0f };
 
@@ -92,7 +94,7 @@ class TestGame : public Engine {
 		FlashLight->Dir = CurrentCam.Orientation;
 
 		Cube.Draw();
-
+		Axe.Draw();
 
 
 

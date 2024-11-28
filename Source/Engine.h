@@ -75,6 +75,7 @@ class Engine
 
 	float LastTime = 0;
 protected:
+	float upTime = 0;
 	Camera CurrentCam;
 	Skybox Sky;
 

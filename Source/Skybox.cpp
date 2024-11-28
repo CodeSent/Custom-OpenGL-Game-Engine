@@ -22,7 +22,7 @@ Skybox::Skybox(const char* Folder)
 void Skybox::process()
 {
 	const char* ShaderDir = "Shaders/Skybox/Shader1";
-	skyboxShader.Build(ShaderDir);
+	skyboxShader.Build(ShaderDir,false);
 
 	float Vertex[6] = {
 		-1.0f, 3.0f, 

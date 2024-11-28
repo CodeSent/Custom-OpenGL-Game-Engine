@@ -89,14 +89,14 @@ void staticMesh::setUniforms()
 	objShader.setUniform("camPos", CameraMatrix.CamPos);
 	objShader.setUniform("lightInfluence", lightInfluence);
 
-	objShader.setUniform("Tex0", 0);
+	objMaterial.setUniforms(objShader);
 }
 
 
 
 void staticMesh::Load(std::string filePath)
 {
-	objShader.Build(ShaderFile);
+	objShader.Build(ShaderFile,true);
 	MeshData& DataSelected = MeshStorage[filePath];
 	if (!DataSelected.Created) {
 		buildModel(DataSelected, filePath);
@@ -112,11 +112,10 @@ void staticMesh::Draw()
 	glBindVertexArray(Data->VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, Data->VBO);
 	objShader.Bind(true);
-	Tex.Bind(true);
 	setUniforms();
 	Check(glDrawArrays(GL_TRIANGLES, 0, Data->Indecies));
-	Tex.Bind(false);
 	objShader.Bind(false);
+	objMaterial.disable();
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 }

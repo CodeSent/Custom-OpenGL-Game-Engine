@@ -45,7 +45,7 @@ void objLoader::parseData(std::string Line)
 		if (PartedLine.size()  > 2) {
 			Vec2 UV;
 			UV.x = std::stof(PartedLine[1]);
-			UV.y = 1 - std::stof(PartedLine[2]);
+			UV.y = std::stof(PartedLine[2]);
 
 
 			Texture.push_back(UV);

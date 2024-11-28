@@ -20,9 +20,10 @@ class Shader
 	static void DisplayErrors();
 	static void ComplieShader(unsigned int &Target,std::string Src,unsigned int Type);
 	static void CreateShader(ShaderInfo& Target,std::string Dirctory);
+	static void CreateShaderWithGeometry(ShaderInfo& Target, std::string Dirctory);
 	static std::string ReadFile(std::string File);
 public:
-	void Build(std::string ShaderDirct);
+	void Build(std::string ShaderDirct,bool Geometry);
 	void Bind(bool State);
 	void Delete();
 	static void DeleteAll();

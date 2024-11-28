@@ -7,17 +7,21 @@
 
 
 CamMat Object::CameraMatrix;
-Light Plane::Sun;
 
 void Object::setUniforms()
 {
 	
 }
 
+void Object::postRender()
+{
+
+}
+
 void Object::Process()
 {
 	if (Vpoint == nullptr or Ipoint == nullptr or PointerData == nullptr) return;
-	objShader.Build(ShaderFile);
+	objShader.Build(ShaderFile, Geometry);
 	Main.Build(&((*Vpoint)[0].Position.x), Vpoint->size() * 8, &(*Ipoint)[0], Ipoint->size(),
 		(*PointerData)
 	);
@@ -40,6 +44,7 @@ void Object::Draw()
 	Main.Push();
 	Tex.Bind(false);
 	objShader.Bind(false);
+	postRender();
 
 }
 
@@ -101,7 +106,12 @@ void Plane::setUniforms()
 	objShader.setUniform("camPos", CameraMatrix.CamPos);
 	objShader.setUniform("lightInfluence", 1.0f);
 
-	objShader.setUniform("Tex0", 0);
+	objMaterial.setUniforms(objShader);
+}
+
+void Plane::postRender()
+{
+	objMaterial.disable();
 }
 
 Plane::Plane()
@@ -110,5 +120,6 @@ Plane::Plane()
 	Ipoint = &I;
 	PointerData = &PointData;
 	ShaderFile = "Shaders/3D/ShaderV2";
+	Geometry = true;
 
 }

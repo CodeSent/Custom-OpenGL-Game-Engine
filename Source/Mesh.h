@@ -7,7 +7,7 @@
 #include "Coord.h"
 #include "Camera.h"
 #include "Shader.h"
-#include "Texture.h"
+#include "Material.h"
 #include "Light.h"
 
 
@@ -29,7 +29,7 @@ class staticMesh
 public:
 	static Light Sun;
 	float lightInfluence = 1.0f;
-	Texture Tex;
+	Material objMaterial;
 	static CamMat CameraMatrix;
 	static std::string ShaderFile;
 	Geomerty3D Transformation;
