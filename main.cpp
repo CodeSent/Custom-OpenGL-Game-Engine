@@ -17,6 +17,7 @@ class TestGame : public Engine {
 	Plane GrassTerrain;
 	staticMesh MeshTest;
 	staticMesh Cube;
+	staticMesh Cube2;
 	staticMesh Axe;
 	staticMesh Sword;
 	float alpha = 0.0f;
@@ -27,45 +28,51 @@ class TestGame : public Engine {
 
 	bool Start()
 	{
-
+		/*
 		GrassTerrain.Transformation.size = { 1000,1000,1000 };
 		GrassTerrain.objMaterial.colorMap.Load("Textures/Grass.png");
 		GrassTerrain.Process();
 
-		Cube.Load("Models/cube.obj");
-		Cube.objMaterial.colorMap.Load("Textures/crate.png",COLOR);
-		Cube.objMaterial.NormalMap.Load("Textures/crate_Normal.png",NORMAL);
-		Cube.objMaterial.SpecularMap.Load("Textures/crate_Specular.png", SPECULAR);
-		Cube.Transformation.size= { 2,2,2 };
-		Cube.Transformation.position.y += 2.5;
+		
 
 		Axe.Load("Models/stall.obj");
 		Axe.objMaterial.colorMap.Load("Textures/stall_UV.png");
 		Axe.objMaterial.NormalMap.Load("Textures/stall_UV_Normal.png",NORMAL);
 		Axe.Transformation.size = { 7,7,7 };
 		Axe.Transformation.position = {15.0f,0.0f,0.0f};
-
+		*/
 		
+		Cube.Load("Models/cube.obj");
+		Cube.objMaterial.colorMap.Load("Textures/Brick_diffuse.png", COLOR);
+		Cube.objMaterial.NormalMap.Load("Textures/Brick_Normal.png", NORMAL);
+		Cube.Transformation.size = { 2,2,2 };
+
+		Cube2.Load("Models/cube.obj");
+		Cube2.objMaterial.colorMap.Load("Textures/Brick_diffuse.png", COLOR);
+		Cube2.Transformation.size = { 2,2,2 };
+		Cube2.Transformation.position.x += 6.0f;
+		//GrassTerrain.Process();
 
 
-		Red =  gameLighting::createLightSource({ 10.0f,10.0f, 0.0f }, { 1.0f,1.0f,1.0f }, POINT);
+		Red =  gameLighting::createLightSource({ 0.0f,2.5f, 1.0f }, { 1.0f,1.0f,1.0f }, POINT);
 		FlashLight = gameLighting::createLightSource({ 0.0f,0.0f, 0.0f }, { 1.0f,1.0f,1.0f }, SPOT);
-		//Green = gameLighting::createLightSource({ 15.0f,7.5f,0.0f }, { 1.0f,0.0f,0.0f });
 
 		FlashLight->Enabled = false;
-		FlashLight->Linear = 0.0001;
+		FlashLight->Constant = 0.1;
+
+		Red->Constant = 0.25;
 
 
 
 		alpha = 0.0f;
 
-		gameLighting::SunDir = { 0.5f,0.5f,0.5f };
+		gameLighting::SunDir = { 0.0f,0.0f,0.0f };
 		
 
-		Sword.Load("Models/Sword.obj");
-		Sword.objMaterial.colorMap.Load("Textures/Sword_Diffuse.png");
-		Sword.Transformation.size = { 4.0f,4.0f,4.0f };
-		Sword.Transformation.position = { 2.5f,2.5f,5.0f };
+		//Sword.Load("Models/Sword.obj");
+		//Sword.objMaterial.colorMap.Load("Textures/Sword_Diffuse.png");
+		//Sword.Transformation.size = { 4.0f,4.0f,4.0f };
+		//Sword.Transformation.position = { 2.5f,2.5f,5.0f };
 
 
 		//Red->Quadratic = 0.01;
@@ -80,7 +87,7 @@ class TestGame : public Engine {
 
 	bool Update(float deltaTime)
 	{
-		GrassTerrain.Draw();
+		//GrassTerrain.Draw();
 
 		//Cube.Transformation.rotation.y += deltaTime * Rotation;
 
@@ -95,7 +102,9 @@ class TestGame : public Engine {
 		FlashLight->Dir = CurrentCam.Orientation;
 
 		Cube.Draw();
-		Axe.Draw();
+		Cube2.Draw();
+		//Axe.Draw();
+
 
 
 
@@ -119,8 +128,7 @@ class TestGame : public Engine {
 
 	void End()
 	{
-		GrassTerrain.Delete();
-		
+		//GrassTerrain.Delete();
 
 	}
 };

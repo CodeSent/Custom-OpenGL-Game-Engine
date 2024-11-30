@@ -77,7 +77,7 @@ void Engine::gameLoop()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 		CurrentCam.Matrix(Skybox::cam);
-		Sky.render();
+		//Sky.render();
 
 		Running = Update(DeltaTime);
 

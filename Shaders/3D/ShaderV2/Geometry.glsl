@@ -6,6 +6,7 @@ layout (triangle_strip,max_vertices = 3) out;
 out vec2 f_UV;
 out vec3 fragNormal;
 out vec3 fragPos;
+out vec3 fragPosTBN;
 out mat3 fragTBN;
 
 
@@ -26,6 +27,7 @@ void defVertex(uint Index) {
 	fragPos = data_in[Index].fragPos;
 	f_UV = data_in[Index].f_UV;
 	fragTBN = inv_TBN;
+	fragPosTBN = inv_TBN * gl_in[Index].gl_Position.xyz;
 	EmitVertex();
 }
 
@@ -42,12 +44,12 @@ void main() {
 	vec3 tangent = vec3(invDet * (deltaUV1.y * edge0 - deltaUV0.y * edge1));
 	vec3 bitangent = vec3(invDet * (-deltaUV1.x * edge0 + deltaUV0.x * edge1));
 
-	vec3 T = normalize(vec3(data_in[0].Model * vec4(tangent,1.0f)));
-	vec3 B = normalize(vec3(data_in[0].Model * vec4(bitangent,1.0f)));
+	vec3 T = normalize(vec3(data_in[0].Model * vec4(-tangent,0.0f)));
+	vec3 B = normalize(vec3(data_in[0].Model * vec4(bitangent,0.0f)));
 	vec3 N = normalize(vec3(data_in[0].Model * vec4(cross(edge1,edge0),0.0f)));
 
 	mat3 TBN = mat3(T,B,N);
-	inv_TBN = TBN;
+	inv_TBN = transpose(TBN);
 
 	defVertex(0);
 	defVertex(1);

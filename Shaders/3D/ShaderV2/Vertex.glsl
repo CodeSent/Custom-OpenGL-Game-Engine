@@ -30,15 +30,15 @@ void main() {
 	f_UV = a_UV;
 	*/
 	vec4 pos = vec4(position,1.0f); 
-	vec3 small = vec3(1.0f,1.0f,1.0f) * 0.0001;
+	vec3 small = vec3(0.001f);
 
 	data_out.fragNormal = mat3(transpose(inverse(u_Model))) * normalize(normal+ small);
 	data_out.fragPos = vec3(u_Model * vec4(position+ small,1.0f));
 	data_out.f_UV =  a_UV;
-	data_out.projection = u_Proj;
+	data_out.projection = u_Proj  * u_View;
 	data_out.Model = u_Model;
 
 
-	gl_Position =  u_View * u_Model * pos;
+	gl_Position =   u_Model * pos;
 
 };

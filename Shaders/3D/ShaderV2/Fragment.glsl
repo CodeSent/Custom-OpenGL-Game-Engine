@@ -37,6 +37,7 @@ struct Material {
 in vec2 f_UV;
 in vec3 fragNormal;
 in vec3 fragPos;
+in vec3 fragPosTBN;
 in mat3 fragTBN;
 
 uniform Material objMaterial;
@@ -64,6 +65,7 @@ vec3 getMapNormal() {
     vec3 v_NormalCopy = v_Normal;
     if (objMaterial.UseNormalMap) {
         v_NormalCopy = normalize((v_Normalread * 2.0f) -1.0f);
+       // v_NormalCopy = max(v_NormalCopy,vec3(0.0f));
     }
     return v_NormalCopy;
 }
@@ -83,9 +85,9 @@ vec3 getPointLight(vec3 Color,LightModel LightSource) {
     vec3 c_camPos = camPos;
 
     if (objMaterial.UseNormalMap) {
-       c_lPos *= fragTBN;
-       c_fragsPos *= fragTBN;
-       c_camPos *= fragTBN;
+       c_lPos = fragTBN  * c_lPos;
+       c_fragsPos = fragPosTBN;
+       c_camPos = fragTBN  * c_camPos;
     }
     
     vec3 lightDir = normalize(c_lPos - c_fragsPos);
@@ -121,9 +123,9 @@ vec3 getSunLight(vec3 Color) {
     vec3 c_camPos = camPos;
     
     if (objMaterial.UseNormalMap) {
-        c_lPos *= fragTBN;
-        c_fragsPos *= fragTBN;
-        c_camPos *= fragTBN;
+       c_lPos = fragTBN  * c_lPos;
+       c_fragsPos = fragPosTBN;
+       c_camPos = fragTBN  * c_camPos;
     }
 
     vec3 lightDir = normalize(c_lPos - c_fragsPos);
@@ -162,9 +164,9 @@ vec3 getSpotLight(vec3 Color,LightModel LightSource) {
     
 
     if (objMaterial.UseNormalMap) {
-       c_lPos *= fragTBN;
-       c_fragsPos *= fragTBN;
-       c_camPos *= fragTBN;
+       c_lPos = fragTBN  * c_lPos;
+       c_fragsPos = fragPosTBN;
+       c_camPos = fragTBN  * c_camPos;
     }
 
     vec3 lightDir = normalize(c_lPos - c_fragsPos);
