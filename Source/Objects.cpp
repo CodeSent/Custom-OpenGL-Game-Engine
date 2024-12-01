@@ -99,6 +99,9 @@ void Plane::setUniforms()
 	objShader.setUnifrom("u_View", ViewMat);
 	objShader.setUnifrom("u_Proj", ProjMat);
 
+	glm::vec3 CameraDir = CameraMatrix.CamDir;
+	objShader.setUniform("u_CameraDir", CameraDir);
+
 	//Sun.setUnifroms(objShader);
 
 	gameLighting::setUnifroms(objShader);

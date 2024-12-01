@@ -31,6 +31,7 @@ void Camera::Matrix(CamMat& Set)
     Set.Proj = Proj;
     Set.View = View;
     Set.CamPos = Position;
+    if (!FreezeOri) Set.CamDir = Orientation;
 
 }
 
@@ -81,4 +82,6 @@ void Camera::Inputs(GLFWwindow* Window)
     }
 
 }
+
+
 

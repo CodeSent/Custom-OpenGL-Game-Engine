@@ -9,10 +9,13 @@
 #include "Shader.h"
 #include "Material.h"
 #include "Light.h"
+#include "VAO.h"
 
 
 struct MeshData {
 	size_t VBO, VAO;
+	//VAO VertexArray;
+	//VBO VertexBuffer;
 	objLoader mainData;
 	size_t Indecies;
 	bool Created;

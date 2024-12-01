@@ -148,6 +148,8 @@
     <ClCompile Include="Source\Skybox.cpp" />
     <ClCompile Include="Source\STB\stb.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
+    <ClCompile Include="Source\VBO.cpp" />
+    <ClCompile Include="Source\VAO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Material.h" />
@@ -164,6 +166,8 @@
     <ClInclude Include="Source\STB\stb_image.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Types.h" />
+    <ClInclude Include="Source\VBO.h" />
+    <ClInclude Include="Source\VAO.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Shaders\2D\ShaderV1\Fragment.glsl" />

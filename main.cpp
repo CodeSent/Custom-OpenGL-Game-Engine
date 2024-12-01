@@ -42,15 +42,11 @@ class TestGame : public Engine {
 		Axe.Transformation.position = {15.0f,0.0f,0.0f};
 		*/
 		
-		Cube.Load("Models/cube.obj");
-		Cube.objMaterial.colorMap.Load("Textures/Brick_diffuse.png", COLOR);
-		Cube.objMaterial.NormalMap.Load("Textures/Brick_Normal.png", NORMAL);
-		Cube.Transformation.size = { 2,2,2 };
+		Cube.Load("Models/Axe.obj");
+		Cube.objMaterial.colorMap.Load("Textures/Axe_UV.png", COLOR);
+		Cube.Transformation.size = { 7.5,5,10 };
 
-		Cube2.Load("Models/cube.obj");
-		Cube2.objMaterial.colorMap.Load("Textures/Brick_diffuse.png", COLOR);
-		Cube2.Transformation.size = { 2,2,2 };
-		Cube2.Transformation.position.x += 6.0f;
+		
 		//GrassTerrain.Process();
 
 
@@ -102,7 +98,6 @@ class TestGame : public Engine {
 		FlashLight->Dir = CurrentCam.Orientation;
 
 		Cube.Draw();
-		Cube2.Draw();
 		//Axe.Draw();
 
 
@@ -120,6 +115,16 @@ class TestGame : public Engine {
 			if (Status == BEGIN) {
 				FlashLight->Enabled = !(FlashLight->Enabled);
 			}
+			break;
+		};
+
+		case T:
+		{
+			if (Status == BEGIN) {
+				CurrentCam.FreezeOri = !CurrentCam.FreezeOri;
+			}
+
+			break;
 		};
 		default:
 			break;

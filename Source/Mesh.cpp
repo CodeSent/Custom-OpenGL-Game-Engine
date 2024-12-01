@@ -49,17 +49,28 @@ void staticMesh::buildModel(MeshData& Data, std::string filePath)
 	//}
 
 	float* Start = &(VertexData[0].p.x);
+	/*
+	Data.VertexBuffer.Create();
+	Data.VertexArray.Create();
+	Data.VertexBuffer.Bind(true);
+	Data.VertexBuffer.setData<vPoints>(VertexData, Start);
+	Data.VertexArray.setAttributes(Data.VertexBuffer,Atributes);
+	*/
+	
 	glGenVertexArrays(1, &(Data.VAO));
 	glBindVertexArray(Data.VAO);
 	glGenBuffers(1, &(Data.VBO));
 	glBindBuffer(GL_ARRAY_BUFFER, Data.VBO);
 	glBufferData(GL_ARRAY_BUFFER, VertexData.size() * sizeof(vPoints), Start, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, Data.VBO);
 	for (VertexPointer data : Atributes) {
 		Check(glEnableVertexAttribArray(data.Index));
 		Check(glVertexAttribPointer(data.Index, data.Length, data.Type, GL_FALSE, data.Stride, (const void*)data.Pointer));
 	}
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
 	Data.Indecies = VertexData.size();
 	Data.Created = true;
 	
@@ -75,13 +86,17 @@ void staticMesh::setUniforms()
 	glm::mat4 ProjMat = glm::mat4(1.0f);
 
 	ModelMat = Transformation.getModelMatrix();
+	objShader.setUnifrom("u_Model", ModelMat);
 
 	ViewMat = CameraMatrix.View;
 	ProjMat = CameraMatrix.Proj;
 
-	objShader.setUnifrom("u_Model", ModelMat);
+
 	objShader.setUnifrom("u_View", ViewMat);
 	objShader.setUnifrom("u_Proj", ProjMat);
+
+	glm::vec3 CameraDir = CameraMatrix.CamDir;
+	objShader.setUniform("u_CameraDir", CameraDir);
 
 	//Sun.setUnifroms(objShader);
 	gameLighting::setUnifroms(objShader);
@@ -109,21 +124,23 @@ void staticMesh::Draw()
 {
 	if (Data == nullptr) return;
 	if (!Data->Created) return;
+	//Data->VertexArray.Bind(true);
 	glBindVertexArray(Data->VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, Data->VBO);
 	objShader.Bind(true);
 	setUniforms();
 	Check(glDrawArrays(GL_TRIANGLES, 0, Data->Indecies));
 	objShader.Bind(false);
 	objMaterial.disable();
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+	//Data->VertexArray.Bind(false);
 }
 
 void staticMesh::Delete()
 {
 	if (Data == nullptr) return;
 	if (!Data->Created) return;
+	//Data->VertexArray.Delete();
+	//Data->VertexBuffer.Delete();
 	glDeleteVertexArrays(1, &(Data->VAO));
 	glDeleteBuffers(1, &(Data->VBO));
 	Data->mainData.clearData();
@@ -136,6 +153,8 @@ void staticMesh::DeleteAll()
 	for (auto& I : MeshStorage) {
 		MeshData& dataToDel = I.second;
 		if (!dataToDel.Created and !dataToDel.mainData.Loaded) return;
+		//dataToDel.VertexArray.Delete();
+		//dataToDel.VertexBuffer.Delete();
 		glDeleteVertexArrays(1, &(dataToDel.VAO));
 		glDeleteBuffers(1, &(dataToDel.VBO));
 		dataToDel.mainData.clearData();

@@ -10,6 +10,7 @@ struct CamMat {
 	glm::mat4x4 View;
 	glm::mat4x4 Proj;
 	glm::vec3 CamPos;
+	glm::vec3 CamDir;
 };
 
 using Vector3 = glm::vec3;
@@ -22,6 +23,8 @@ public:
 	Vector3 Position = Vector3(0.0f,10.0f,5.0f);
 	Vector3 Up = Vector3(0.0f, 1.0f, 0.0f);
 	Vector3 Orientation = Vector3(0.0f,0.0f,-1.0f);
+
+	bool FreezeOri = false;
 
 	int Width, Height;
 

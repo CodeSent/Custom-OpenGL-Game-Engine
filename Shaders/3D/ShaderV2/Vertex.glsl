@@ -8,8 +8,10 @@ out Data {
 	vec2 f_UV;
     vec3 fragNormal;
 	vec3 fragPos;
+	vec3 CameraDir;
 	mat4 projection;
 	mat4 Model;
+	mat4 View;
 } data_out;
 
 
@@ -17,6 +19,8 @@ out Data {
 uniform mat4 u_Model;
 uniform mat4 u_View;
 uniform mat4 u_Proj;
+
+uniform vec3 u_CameraDir;
 
 void main() { 
 	/*
@@ -37,6 +41,8 @@ void main() {
 	data_out.f_UV =  a_UV;
 	data_out.projection = u_Proj  * u_View;
 	data_out.Model = u_Model;
+	data_out.View = u_View;
+	data_out.CameraDir = u_CameraDir;
 
 
 	gl_Position =   u_Model * pos;

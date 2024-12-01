@@ -15,8 +15,10 @@ in Data {
 	vec2 f_UV;
     vec3 fragNormal;
 	vec3 fragPos;
+	vec3 CameraDir;
 	mat4 projection;
 	mat4 Model;
+	mat4 View;
 } data_in[];
 
 mat3 inv_TBN;
@@ -31,8 +33,48 @@ void defVertex(uint Index) {
 	EmitVertex();
 }
 
+float getDot(int Index) {
+	return dot(normalize(data_in[Index].fragNormal),normalize(data_in[Index].CameraDir));
+}
+
+
+uint isVertexWithinFrustum(int Index) {
+	bool isWithin = true;
+
+
+
+	return uint (isWithin);
+}
+
+
+bool isTriangleWithinFrustum() {
+	bool isWithin = bool(max(isVertexWithinFrustum(2),max(isVertexWithinFrustum(1),isVertexWithinFrustum(0))));
+	return isWithin;
+}
+
+
+
 
 void main() {
+	if (!isTriangleWithinFrustum()) return;
+
+	float pointOfVisiblity = 0.4;
+
+	float aDot = getDot(0);
+	float bDot = getDot(1);
+	float cDot = getDot(2);
+
+	float Avg = (aDot+bDot+cDot)/3;
+	float Minimum = min(aDot,min(bDot,cDot));
+
+	if(Avg > pointOfVisiblity) return;
+
+
+
+
+
+
+
 	vec3 edge0 = gl_in[1].gl_Position.xyz - gl_in[0].gl_Position.xyz;
 	vec3 edge1 = gl_in[2].gl_Position.xyz - gl_in[0].gl_Position.xyz;
 
