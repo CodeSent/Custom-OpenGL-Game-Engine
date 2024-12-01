@@ -58,7 +58,7 @@ bool isTriangleWithinFrustum() {
 void main() {
 	if (!isTriangleWithinFrustum()) return;
 
-	float pointOfVisiblity = 0.4;
+	float pointOfVisiblity = 0.682;
 
 	float aDot = getDot(0);
 	float bDot = getDot(1);

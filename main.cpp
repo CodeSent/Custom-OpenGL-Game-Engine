@@ -28,26 +28,21 @@ class TestGame : public Engine {
 
 	bool Start()
 	{
-		/*
+
 		GrassTerrain.Transformation.size = { 1000,1000,1000 };
 		GrassTerrain.objMaterial.colorMap.Load("Textures/Grass.png");
 		GrassTerrain.Process();
 
 		
 
-		Axe.Load("Models/stall.obj");
-		Axe.objMaterial.colorMap.Load("Textures/stall_UV.png");
-		Axe.objMaterial.NormalMap.Load("Textures/stall_UV_Normal.png",NORMAL);
-		Axe.Transformation.size = { 7,7,7 };
-		Axe.Transformation.position = {15.0f,0.0f,0.0f};
-		*/
+	
+	
 		
 		Cube.Load("Models/Axe.obj");
 		Cube.objMaterial.colorMap.Load("Textures/Axe_UV.png", COLOR);
 		Cube.Transformation.size = { 7.5,5,10 };
 
 		
-		//GrassTerrain.Process();
 
 
 		Red =  gameLighting::createLightSource({ 0.0f,2.5f, 1.0f }, { 1.0f,1.0f,1.0f }, POINT);
@@ -83,7 +78,7 @@ class TestGame : public Engine {
 
 	bool Update(float deltaTime)
 	{
-		//GrassTerrain.Draw();
+		GrassTerrain.Draw();
 
 		//Cube.Transformation.rotation.y += deltaTime * Rotation;
 
