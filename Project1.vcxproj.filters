@@ -57,10 +57,10 @@
     <ClCompile Include="Source\Material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\VBO.cpp">
+    <ClCompile Include="Source\Buffers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\VAO.cpp">
+    <ClCompile Include="Source\VertexArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -107,10 +107,10 @@
     <ClInclude Include="Source\Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\VBO.h">
+    <ClInclude Include="Source\Buffers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\VAO.h">
+    <ClInclude Include="Source\VertexArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

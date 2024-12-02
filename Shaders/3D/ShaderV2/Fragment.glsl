@@ -213,9 +213,9 @@ void main()
         switch(selLight.Type) {
 
         case enum_POINT_LIGHT:
-            color += getPointLight(color,selLight);
+            color += getPointLight(texColor,selLight);
         case enum_SPOT_LIGHT:
-            color += getSpotLight(color,selLight);
+            color += getSpotLight(texColor,selLight);
         default:
             break;
         }

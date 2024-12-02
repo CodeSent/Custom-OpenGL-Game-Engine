@@ -1,8 +1,8 @@
 #pragma once
-#include <GLFW\glfw3.h>
 #include "RenderOBJ.h"
 #include "Skybox.h"
 #include "Camera.h"
+#include <GLFW\glfw3.h>
 
 enum keyCode {
 	NULL_KEY = -1,

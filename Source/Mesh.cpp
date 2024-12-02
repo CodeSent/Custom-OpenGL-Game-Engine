@@ -41,36 +41,21 @@ void staticMesh::buildModel(MeshData& Data, std::string filePath)
 	if (!Data.mainData.Loaded) Data.mainData.loadData(filePath);
 	std::vector<vPoints>& VertexData = Data.mainData.facesData;
 
-	std::cout << "Complied a Mesh" << "\n";
-//	int Index = 0;
-	//for (auto& I : VertexData) {
-	//	std::cout << Index << ":" << "(" << I.p.x << "," << I.p.y << "," << I.p.z << "):(" << I.n.x << "," << I.n.y << "," << I.n.z << "):(" << I.t.x << "," << I.t.y << ")" << "\n";
-	//	Index++;
-	//}
-
 	float* Start = &(VertexData[0].p.x);
-	/*
-	Data.VertexBuffer.Create();
-	Data.VertexArray.Create();
-	Data.VertexBuffer.Bind(true);
-	Data.VertexBuffer.setData<vPoints>(VertexData, Start);
-	Data.VertexArray.setAttributes(Data.VertexBuffer,Atributes);
-	*/
-	
-	glGenVertexArrays(1, &(Data.VAO));
-	glBindVertexArray(Data.VAO);
-	glGenBuffers(1, &(Data.VBO));
-	glBindBuffer(GL_ARRAY_BUFFER, Data.VBO);
-	glBufferData(GL_ARRAY_BUFFER, VertexData.size() * sizeof(vPoints), Start, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ARRAY_BUFFER, Data.VBO);
+
+	Data.vBuffer.Create(VERTEX);
+	Data.vArray.Create();
+
+	Data.vArray.Bind(true);
+	Data.vBuffer.Bind(true);
+	Data.vBuffer.setData(VertexData);
+
 	for (VertexPointer data : Atributes) {
-		Check(glEnableVertexAttribArray(data.Index));
-		Check(glVertexAttribPointer(data.Index, data.Length, data.Type, GL_FALSE, data.Stride, (const void*)data.Pointer));
+		Data.vArray.setAttributes(data);
 	}
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	
+	Data.vArray.Bind(false);
+	Data.vBuffer.Bind(false);
+
 	Data.Indecies = VertexData.size();
 	Data.Created = true;
 	
@@ -124,25 +109,23 @@ void staticMesh::Draw()
 {
 	if (Data == nullptr) return;
 	if (!Data->Created) return;
-	//Data->VertexArray.Bind(true);
-	glBindVertexArray(Data->VAO);
+	Data->vArray.Bind(true);
 	objShader.Bind(true);
 	setUniforms();
 	Check(glDrawArrays(GL_TRIANGLES, 0, Data->Indecies));
 	objShader.Bind(false);
 	objMaterial.disable();
-	glBindVertexArray(0);
-	//Data->VertexArray.Bind(false);
+	Data->vArray.Bind(false);
 }
 
 void staticMesh::Delete()
 {
 	if (Data == nullptr) return;
 	if (!Data->Created) return;
-	//Data->VertexArray.Delete();
-	//Data->VertexBuffer.Delete();
-	glDeleteVertexArrays(1, &(Data->VAO));
-	glDeleteBuffers(1, &(Data->VBO));
+	Data->vArray.Delete();
+	Data->vBuffer.Delete();
+	//glDeleteVertexArrays(1, &(Data->VAO));
+	//glDeleteBuffers(1, &(Data->VBO));
 	Data->mainData.clearData();
 
 	Data->Created = false;
@@ -153,10 +136,8 @@ void staticMesh::DeleteAll()
 	for (auto& I : MeshStorage) {
 		MeshData& dataToDel = I.second;
 		if (!dataToDel.Created and !dataToDel.mainData.Loaded) return;
-		//dataToDel.VertexArray.Delete();
-		//dataToDel.VertexBuffer.Delete();
-		glDeleteVertexArrays(1, &(dataToDel.VAO));
-		glDeleteBuffers(1, &(dataToDel.VBO));
+		dataToDel.vArray.Delete();
+		dataToDel.vBuffer.Delete();
 		dataToDel.mainData.clearData();
 
 		dataToDel.Created = false;

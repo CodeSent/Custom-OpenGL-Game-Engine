@@ -1,7 +1,8 @@
 #include <iostream>
-#include "Source/Engine.h"
 #include "Source/Objects.h"
 #include "Source/Mesh.h"
+
+#include "Source/Engine.h"
 
 
 
@@ -40,7 +41,7 @@ class TestGame : public Engine {
 		
 		Cube.Load("Models/Axe.obj");
 		Cube.objMaterial.colorMap.Load("Textures/Axe_UV.png", COLOR);
-		Cube.Transformation.size = { 7.5,5,10 };
+		Cube.Transformation.size = { 1,1,1 };
 
 		
 
@@ -57,7 +58,7 @@ class TestGame : public Engine {
 
 		alpha = 0.0f;
 
-		gameLighting::SunDir = { 0.0f,0.0f,0.0f };
+		//gameLighting::SunDir = { 0.0f,0.0f,0.0f };
 		
 
 		//Sword.Load("Models/Sword.obj");

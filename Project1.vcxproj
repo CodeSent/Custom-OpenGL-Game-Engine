@@ -134,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Buffers.cpp" />
     <ClCompile Include="Source\Material.cpp" />
     <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
@@ -148,10 +149,10 @@
     <ClCompile Include="Source\Skybox.cpp" />
     <ClCompile Include="Source\STB\stb.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
-    <ClCompile Include="Source\VBO.cpp" />
-    <ClCompile Include="Source\VAO.cpp" />
+    <ClCompile Include="Source\VertexArray.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Buffers.h" />
     <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\Mesh.h" />
@@ -166,8 +167,7 @@
     <ClInclude Include="Source\STB\stb_image.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Types.h" />
-    <ClInclude Include="Source\VBO.h" />
-    <ClInclude Include="Source\VAO.h" />
+    <ClInclude Include="Source\VertexArray.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Shaders\2D\ShaderV1\Fragment.glsl" />
